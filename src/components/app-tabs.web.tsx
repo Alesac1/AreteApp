@@ -8,10 +8,9 @@ import {
 } from 'expo-router/ui';
 import { Image, Pressable, StyleSheet, useColorScheme, View } from 'react-native';
 
-import { ThemedText } from './themed-text';
 import { ThemedView } from './themed-view';
 
-import { Colors, MaxContentWidth, Spacing } from '@/constants/theme';
+import { Colors, Spacing } from '@/constants/theme';
 
 export default function AppTabs() {
   return (

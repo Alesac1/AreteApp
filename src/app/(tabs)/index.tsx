@@ -1,5 +1,14 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import {
+  Image,
+  ImageBackground,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const categories = ['New', 'Popular', 'Gym', 'Outdoor'];
@@ -26,8 +35,10 @@ const classesData = [
 ];
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.content}
@@ -53,24 +64,25 @@ export default function HomeScreen() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.chipsRow}
         >
-          {categories.map((item, index) => (
-            <Pressable
-              key={item}
-              style={[
-                styles.chip,
-                index === 1 && styles.chipActive,
-              ]}
-            >
-              <Text
-                style={[
-                  styles.chipText,
-                  index === 1 && styles.chipTextActive,
-                ]}
+          {categories.map((item, index) => {
+            const isActive = index === 1;
+
+            return (
+              <Pressable
+                key={item}
+                onPress={() => {
+                  if (item === 'Gym') {
+                    router.push('/(tabs)/gyms');
+                  }
+                }}
+                style={[styles.chip, isActive && styles.chipActive]}
               >
-                {item}
-              </Text>
-            </Pressable>
-          ))}
+                <Text style={[styles.chipText, isActive && styles.chipTextActive]}>
+                  {item}
+                </Text>
+              </Pressable>
+            );
+          })}
         </ScrollView>
 
         <View style={styles.heroRow}>
@@ -158,15 +170,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#2b2b2b',
   },
   content: {
-    paddingHorizontal: 20,
     paddingTop: 8,
     paddingBottom: 120,
   },
+
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 22,
+    paddingHorizontal: 20,
   },
   iconButton: {
     width: 46,
@@ -189,13 +202,15 @@ const styles = StyleSheet.create({
   },
   logo: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '700',
     letterSpacing: 0.5,
   },
+
   chipsRow: {
     gap: 10,
     paddingBottom: 22,
+    paddingHorizontal: 20,
   },
   chip: {
     paddingVertical: 12,
@@ -208,16 +223,18 @@ const styles = StyleSheet.create({
   },
   chipText: {
     color: '#f1f1f1',
-    fontSize: 15,
+    fontSize: 13,
     fontWeight: '600',
   },
   chipTextActive: {
     color: '#111',
   },
+
   heroRow: {
     flexDirection: 'row',
     gap: 14,
     marginBottom: 26,
+    paddingHorizontal: 12,
   },
   heroCard: {
     borderRadius: 28,
@@ -250,16 +267,16 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     color: '#fff',
-    fontSize: 34,
+    fontSize: 28,
     fontWeight: '700',
-    lineHeight: 36,
+    lineHeight: 30,
     maxWidth: 160,
   },
   heroTitleSmall: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '700',
-    lineHeight: 28,
+    lineHeight: 24,
     maxWidth: 100,
   },
   heroActions: {
@@ -282,7 +299,7 @@ const styles = StyleSheet.create({
   },
   watchButtonText: {
     color: '#111',
-    fontSize: 15,
+    fontSize: 13,
     fontWeight: '700',
   },
   bookmarkButton: {
@@ -293,25 +310,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 14,
+    paddingHorizontal: 20,
   },
   sectionTitle: {
     color: '#fff',
-    fontSize: 29,
+    fontSize: 24,
     fontWeight: '700',
   },
   sectionLink: {
     color: '#e8e8e8',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
   },
+
   cardsRow: {
     gap: 14,
-    paddingRight: 10,
+    paddingHorizontal: 20,
+    paddingRight: 30,
   },
   infoCard: {
     width: 170,
@@ -321,7 +342,7 @@ const styles = StyleSheet.create({
   },
   infoCardTitle: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '600',
     marginBottom: 10,
   },
@@ -334,12 +355,12 @@ const styles = StyleSheet.create({
   },
   tagText: {
     color: '#fff',
-    fontSize: 13,
+    fontSize: 11,
     fontWeight: '600',
   },
   progressText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '700',
     marginBottom: 10,
   },
